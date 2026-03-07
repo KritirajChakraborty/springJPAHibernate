@@ -1,4 +1,4 @@
-package com.Kritiraj.SpringJPAHibernate;
+package com.Kritiraj.SpringJPAHibernate.Enum;
 
 public enum TripStatus {
     ONGOING,

@@ -1,4 +1,4 @@
-package com.Kritiraj.SpringJPAHibernate;
+package com.Kritiraj.SpringJPAHibernate.model;
 
 
 import jakarta.persistence.Entity;

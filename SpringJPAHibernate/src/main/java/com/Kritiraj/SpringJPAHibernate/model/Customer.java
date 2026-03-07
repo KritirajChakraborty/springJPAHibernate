@@ -1,6 +1,7 @@
-package com.Kritiraj.SpringJPAHibernate;
+package com.Kritiraj.SpringJPAHibernate.model;
 
 
+import com.Kritiraj.SpringJPAHibernate.Enum.Gender;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,5 +1,7 @@
-package com.Kritiraj.SpringJPAHibernate;
+package com.Kritiraj.SpringJPAHibernate.model;
 
+import com.Kritiraj.SpringJPAHibernate.model.Booking;
+import com.Kritiraj.SpringJPAHibernate.model.Cab;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
