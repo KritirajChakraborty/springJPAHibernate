@@ -3,31 +3,30 @@ package com.Kritiraj.SpringJPAHibernate.model;
 
 import com.Kritiraj.SpringJPAHibernate.Enum.Gender;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 //instead of manually writing 2 constructor and 10 getter and setters we can use lombok annotation
 //so in future if we add 20 attributes,40 getters and setters will not be written, Lombok handles this
-@NoArgsConstructor   //this is for default constructor with no args
-@AllArgsConstructor  //this is for all args constructor
-@Getter
-@Setter
+//@NoArgsConstructor   //this is for default constructor with no args
+//@AllArgsConstructor  //this is for all args constructor
+//@Getter
+//@Setter
 @Entity              // this is for letting JPA know to create a DB table for this class
 //@Table(name="customer_info")
 public class Customer {
 
     @Id   // this is the annotation to let JPA know this is the primary key
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //this is auto incrementing for PK so user dont need to enter id
     private int customerId;
     //@Column(name="first_name)
     private String name;
     private int age;
     private String email;
-    Gender gender;
+    @Enumerated(EnumType.STRING)   // ← THIS IS LIKELY YOUR PROBLEM
+    private Gender gender;
 
     //this is how we create oneToMany relationship in java where one represents the
     @OneToMany(cascade= CascadeType.ALL) // ALL will propagate all properties from parent to child entity(create,save,remove etc) you can add specific cascading too
@@ -35,6 +34,21 @@ public class Customer {
             // if we dont use the name="customer_id" then JPA will create a column name as bookings_customer_id
             //basically name of the foreign key variable + name of the primary key of the table it is referenced to.
     List<Booking> bookings = new ArrayList<>();
+
+    //manuel constructor, getter and setters
+    public Customer() {}
+
+    // Manual getters and setters
+    public int getCustomerId() { return customerId; }
+    public void setCustomerId(int customerId) { this.customerId = customerId; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    public int getAge() { return age; }
+    public void setAge(int age) { this.age = age; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+    public Gender getGender() { return gender; }
+    public void setGender(Gender gender) { this.gender = gender; }
 }
 //1
 //if we say add another attribute to entity here, JPA will create a new column in DB

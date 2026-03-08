@@ -19,6 +19,7 @@ import java.util.List;
 public class Driver {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int driverId;
     private String name;
     private int age;
