@@ -10,10 +10,10 @@ import java.util.List;
 
 //instead of manually writing 2 constructor and 10 getter and setters we can use lombok annotation
 //so in future if we add 20 attributes,40 getters and setters will not be written, Lombok handles this
-//@NoArgsConstructor   //this is for default constructor with no args
-//@AllArgsConstructor  //this is for all args constructor
-//@Getter
-//@Setter
+@NoArgsConstructor   //this is for default constructor with no args
+@AllArgsConstructor  //this is for all args constructor
+@Getter
+@Setter
 @Entity              // this is for letting JPA know to create a DB table for this class
 //@Table(name="customer_info")
 public class Customer {
@@ -25,7 +25,7 @@ public class Customer {
     private String name;
     private int age;
     private String email;
-    @Enumerated(EnumType.STRING)   // ← THIS IS LIKELY YOUR PROBLEM
+    //@Enumerated(EnumType.STRING)
     private Gender gender;
 
     //this is how we create oneToMany relationship in java where one represents the
@@ -35,20 +35,7 @@ public class Customer {
             //basically name of the foreign key variable + name of the primary key of the table it is referenced to.
     List<Booking> bookings = new ArrayList<>();
 
-    //manuel constructor, getter and setters
-    public Customer() {}
 
-    // Manual getters and setters
-    public int getCustomerId() { return customerId; }
-    public void setCustomerId(int customerId) { this.customerId = customerId; }
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-    public int getAge() { return age; }
-    public void setAge(int age) { this.age = age; }
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-    public Gender getGender() { return gender; }
-    public void setGender(Gender gender) { this.gender = gender; }
 }
 //1
 //if we say add another attribute to entity here, JPA will create a new column in DB

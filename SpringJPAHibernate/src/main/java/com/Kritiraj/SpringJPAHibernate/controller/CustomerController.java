@@ -5,10 +5,7 @@ import com.Kritiraj.SpringJPAHibernate.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/customer")
@@ -20,9 +17,14 @@ public class CustomerController {
     @PostMapping("/add")
     public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer) {
 
-
-
         Customer savedCustomer =  customerService.addCustomer(customer);
         return new ResponseEntity<>(savedCustomer, HttpStatus.OK);
     }
+
+    @GetMapping("/get/customer-id/{id}")
+    public ResponseEntity<Customer> getCustomer(@PathVariable("id") int customer_id) {
+        Customer customer =  customerService.getCustomer(customer_id);
+        return new ResponseEntity<>(customer,HttpStatus.OK);
+    }
+
 }
