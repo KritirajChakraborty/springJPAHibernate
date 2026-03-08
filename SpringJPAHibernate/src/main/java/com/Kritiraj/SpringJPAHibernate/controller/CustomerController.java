@@ -1,5 +1,7 @@
 package com.Kritiraj.SpringJPAHibernate.controller;
 
+import com.Kritiraj.SpringJPAHibernate.dto.request.CustomerRequest;
+import com.Kritiraj.SpringJPAHibernate.dto.response.CustomerResponse;
 import com.Kritiraj.SpringJPAHibernate.model.Customer;
 import com.Kritiraj.SpringJPAHibernate.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,16 +17,16 @@ public class CustomerController {
     CustomerService customerService;
 
     @PostMapping("/add")
-    public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer) {
+    public ResponseEntity<CustomerResponse> addCustomer(@RequestBody CustomerRequest customerRequest) {
 
-        Customer savedCustomer =  customerService.addCustomer(customer);
-        return new ResponseEntity<>(savedCustomer, HttpStatus.OK);
+        CustomerResponse savedCustomerResponse =  customerService.addCustomer(customerRequest);
+        return new ResponseEntity<>(savedCustomerResponse, HttpStatus.OK);
     }
 
     @GetMapping("/get/customer-id/{id}")
-    public ResponseEntity<Customer> getCustomer(@PathVariable("id") int customer_id) {
-        Customer customer =  customerService.getCustomer(customer_id);
-        return new ResponseEntity<>(customer,HttpStatus.OK);
+    public ResponseEntity<CustomerResponse> getCustomer(@PathVariable("id") int customerId) {
+        CustomerResponse customerResponse =  customerService.getCustomer(customerId);
+        return new ResponseEntity<>(customerResponse,HttpStatus.OK);
     }
 
 }

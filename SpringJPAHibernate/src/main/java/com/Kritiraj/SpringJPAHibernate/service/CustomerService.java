@@ -1,5 +1,7 @@
 package com.Kritiraj.SpringJPAHibernate.service;
 
+import com.Kritiraj.SpringJPAHibernate.dto.request.CustomerRequest;
+import com.Kritiraj.SpringJPAHibernate.dto.response.CustomerResponse;
 import com.Kritiraj.SpringJPAHibernate.exception.CustomerNotFoundException;
 import com.Kritiraj.SpringJPAHibernate.model.Customer;
 import com.Kritiraj.SpringJPAHibernate.repository.CustomerRepository;
@@ -13,15 +15,34 @@ public class CustomerService {
 
     @Autowired
     CustomerRepository customerRepository;
-    public Customer addCustomer(Customer customer) {
-        return customerRepository.save(customer);
+    public CustomerResponse addCustomer(CustomerRequest customerRequest) {
+
+        Customer customer = new Customer();
+        customer.setName(customerRequest.getName());
+        customer.setAge(customerRequest.getAge());
+        customer.setEmail(customerRequest.getEmail());
+        customer.setGender(customerRequest.getGender());
+
+        Customer savedCustomer = customerRepository.save(customer);
+
+        CustomerResponse customerResponse = new CustomerResponse();
+        customerResponse.setName(savedCustomer.getName());
+        customerResponse.setAge(savedCustomer.getAge());
+        customerResponse.setEmail(savedCustomer.getEmail());
+        return customerResponse;
     }
 
-    public Customer getCustomer(int customerId) {
+    public CustomerResponse getCustomer(int customerId) {
         Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
         if(optionalCustomer.isEmpty()) {
             throw new CustomerNotFoundException("Invalid ID, Customer doesn't exist!");
         }
-        return optionalCustomer.get();
+
+        Customer savedCustomer = optionalCustomer.get();
+        CustomerResponse customerResponse = new CustomerResponse();
+        customerResponse.setName(savedCustomer.getName());
+        customerResponse.setAge(savedCustomer.getAge());
+        customerResponse.setEmail(savedCustomer.getEmail());
+        return customerResponse;
     }
 }
