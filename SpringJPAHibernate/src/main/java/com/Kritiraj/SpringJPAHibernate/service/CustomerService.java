@@ -5,6 +5,7 @@ import com.Kritiraj.SpringJPAHibernate.dto.response.CustomerResponse;
 import com.Kritiraj.SpringJPAHibernate.exception.CustomerNotFoundException;
 import com.Kritiraj.SpringJPAHibernate.model.Customer;
 import com.Kritiraj.SpringJPAHibernate.repository.CustomerRepository;
+import com.Kritiraj.SpringJPAHibernate.transformer.CustomerTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,19 +18,11 @@ public class CustomerService {
     CustomerRepository customerRepository;
     public CustomerResponse addCustomer(CustomerRequest customerRequest) {
 
-        Customer customer = new Customer();
-        customer.setName(customerRequest.getName());
-        customer.setAge(customerRequest.getAge());
-        customer.setEmail(customerRequest.getEmail());
-        customer.setGender(customerRequest.getGender());
+        Customer customer = CustomerTransformer.customerRequestToCustomer(customerRequest);
 
         Customer savedCustomer = customerRepository.save(customer);
 
-        CustomerResponse customerResponse = new CustomerResponse();
-        customerResponse.setName(savedCustomer.getName());
-        customerResponse.setAge(savedCustomer.getAge());
-        customerResponse.setEmail(savedCustomer.getEmail());
-        return customerResponse;
+        return CustomerTransformer.customerToCustomerResponse(customer);
     }
 
     public CustomerResponse getCustomer(int customerId) {
@@ -39,10 +32,6 @@ public class CustomerService {
         }
 
         Customer savedCustomer = optionalCustomer.get();
-        CustomerResponse customerResponse = new CustomerResponse();
-        customerResponse.setName(savedCustomer.getName());
-        customerResponse.setAge(savedCustomer.getAge());
-        customerResponse.setEmail(savedCustomer.getEmail());
-        return customerResponse;
+        return CustomerTransformer.customerToCustomerResponse(savedCustomer);
     }
 }

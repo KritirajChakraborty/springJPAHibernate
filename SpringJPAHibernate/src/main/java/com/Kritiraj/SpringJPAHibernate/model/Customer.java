@@ -16,6 +16,7 @@ import java.util.List;
 @Setter
 @Entity              // this is for letting JPA know to create a DB table for this class
 //@Table(name="customer_info")
+@Builder
 public class Customer {
 
     @Id   // this is the annotation to let JPA know this is the primary key
