@@ -1,10 +1,9 @@
 package com.Kritiraj.SpringJPAHibernate.repository;
 
-import com.Kritiraj.SpringJPAHibernate.model.Driver;
+import com.Kritiraj.SpringJPAHibernate.model.Booking;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DriverRepository extends JpaRepository<Driver, Integer> {
-    Driver findByCabCabId(int cabId);
+public interface BookingRepository extends JpaRepository<Booking,Integer> {
 }
