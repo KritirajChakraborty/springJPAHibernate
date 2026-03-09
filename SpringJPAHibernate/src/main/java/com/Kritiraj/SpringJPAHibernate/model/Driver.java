@@ -3,10 +3,7 @@ package com.Kritiraj.SpringJPAHibernate.model;
 import com.Kritiraj.SpringJPAHibernate.model.Booking;
 import com.Kritiraj.SpringJPAHibernate.model.Cab;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Builder
 public class Driver {
 
     @Id
@@ -23,6 +21,7 @@ public class Driver {
     private int driverId;
     private String name;
     private int age;
+    @Column(unique = true,nullable = false)
     private String emailId;
 
     @OneToMany(cascade= CascadeType.ALL)
