@@ -35,7 +35,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     List<Customer> findByGenderAndAgeGreaterThan(@Param("gender") Gender gender, @Param("age") int age);
 
     //using native query and SQL
-    //@Query(value = "select * from Customer where gender = :gender and age > :age", nativeQuery = true)
+    //@Query(value = "select * from customer where gender = :gender and age > :age", nativeQuery = true)
     //List<Customer> findByGenderAndAgeGreaterThan(@Param("gender") Gender gender, @Param("age") int age);
     //ALWAYS USE HQL instead of native queries. only when we need complex DB logic then go for native sql
 //  important :- JPQL/HQL works on java entities and fields and it is db independent

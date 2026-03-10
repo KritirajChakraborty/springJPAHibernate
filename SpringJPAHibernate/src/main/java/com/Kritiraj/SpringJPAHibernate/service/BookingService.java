@@ -40,9 +40,6 @@ public class BookingService {
         }
         Customer customer = optionalCustomer.get();
 
-        Booking booking = BookingTransformer.bookingRequestToBooking(bookingRequest);
-        booking.setTripStatus(TripStatus.ONGOING);
-
         Cab cab = cabRepository.findAvailableCab();
         if(cab == null) {
             throw new CabNotAvailableException("Sorry. No Cab Found!");
@@ -50,19 +47,17 @@ public class BookingService {
         cab.setAvailable(false);
         cabRepository.save(cab);
 
-        booking.setBillAmount(booking.getTripDistanceInKM() * cab.getPerKMRate());
-
+        Booking booking = BookingTransformer.bookingRequestToBooking(bookingRequest,cab.getPerKMRate());
         Booking savedBooking = bookingRepository.save(booking);
-        List<Booking> bookingListOfCustomer = customer.getBookings();
-        bookingListOfCustomer.add(savedBooking);
-        customerRepository.save(customer);
+        customer.getBookings().add(savedBooking);
 
-        Driver driver = driverRepository.findByCabCabId(cab.getCabId());
-        List<Booking> bookingListOfDriver = driver.getBookings();
-        bookingListOfDriver.add(savedBooking);
-        driverRepository.save(driver);
+        Driver driver = driverRepository.findDriverByCabId(cab.getCabId());
+        driver.getBookings().add(savedBooking);
 
-        return BookingTransformer.bookingToBookingResponse(savedBooking,customer,cab,driver);
+        Customer savedCustomer = customerRepository.save(customer);
+        Driver savedDriver = driverRepository.save(driver);
+
+        return BookingTransformer.bookingToBookingResponse(savedBooking,savedCustomer,cab,savedDriver);
 
     }
 }

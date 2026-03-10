@@ -1,5 +1,6 @@
 package com.Kritiraj.SpringJPAHibernate.transformer;
 
+import com.Kritiraj.SpringJPAHibernate.Enum.TripStatus;
 import com.Kritiraj.SpringJPAHibernate.dto.request.BookingRequest;
 import com.Kritiraj.SpringJPAHibernate.dto.response.BookingResponse;
 import com.Kritiraj.SpringJPAHibernate.dto.response.CabResponse;
@@ -11,11 +12,13 @@ import com.Kritiraj.SpringJPAHibernate.model.Customer;
 import com.Kritiraj.SpringJPAHibernate.model.Driver;
 
 public class BookingTransformer {
-    public static Booking bookingRequestToBooking (BookingRequest bookingRequest) {
+    public static Booking bookingRequestToBooking (BookingRequest bookingRequest, double perKMRate) {
         return Booking.builder()
                 .pickup(bookingRequest.getPickup())
                 .destination(bookingRequest.getDestination())
                 .tripDistanceInKM(bookingRequest.getTripDistanceInKM())
+                .tripStatus(TripStatus.ONGOING)
+                .billAmount(bookingRequest.getTripDistanceInKM() * perKMRate)
                 .build();
     }
 
