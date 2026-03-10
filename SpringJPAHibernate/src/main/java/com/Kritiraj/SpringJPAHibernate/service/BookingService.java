@@ -15,6 +15,8 @@ import com.Kritiraj.SpringJPAHibernate.repository.CustomerRepository;
 import com.Kritiraj.SpringJPAHibernate.repository.DriverRepository;
 import com.Kritiraj.SpringJPAHibernate.transformer.BookingTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,6 +33,8 @@ public class BookingService {
     BookingRepository bookingRepository;
     @Autowired
     DriverRepository driverRepository;
+    @Autowired
+    JavaMailSender javaMailSender;
 
     public BookingResponse bookCab(BookingRequest bookingRequest, int customerId) {
 
@@ -57,7 +61,19 @@ public class BookingService {
         Customer savedCustomer = customerRepository.save(customer);
         Driver savedDriver = driverRepository.save(driver);
 
+        sendEmail(savedCustomer);
         return BookingTransformer.bookingToBookingResponse(savedBooking,savedCustomer,cab,savedDriver);
 
+    }
+    private void sendEmail(Customer customer) {
+
+        String body = "Congrats " + customer.getName() + ". Your booking is gachi confirmed!";
+
+        SimpleMailMessage simpleEmailMessage = new SimpleMailMessage();
+        simpleEmailMessage.setFrom("kritiraj.exams2021@gmail.com");
+        simpleEmailMessage.setTo(customer.getEmail());
+        simpleEmailMessage.setSubject("Cab Booked.");
+        simpleEmailMessage.setText(body);
+        javaMailSender.send(simpleEmailMessage);
     }
 }
