@@ -8,34 +8,44 @@ import com.Kritiraj.SpringJPAHibernate.exception.CustomerNotFoundException;
 import com.Kritiraj.SpringJPAHibernate.model.Customer;
 import com.Kritiraj.SpringJPAHibernate.repository.CustomerRepository;
 import com.Kritiraj.SpringJPAHibernate.transformer.CustomerTransformer;
+import io.micrometer.core.instrument.MeterRegistry;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+@Slf4j
 @Service
 public class CustomerService {
 
     @Autowired
     CustomerRepository customerRepository;
+
+    @Autowired
+    MeterRegistry meterRegistry;
+
     public CustomerResponse addCustomer(CustomerRequest customerRequest) {
 
         Customer customer = CustomerTransformer.customerRequestToCustomer(customerRequest);
 
         Customer savedCustomer = customerRepository.save(customer);
+        meterRegistry.counter("custom.metric.numberOfCustomer").increment();
 
         return CustomerTransformer.customerToCustomerResponse(customer);
     }
 
     public CustomerResponse getCustomer(int customerId) {
+        log.trace("Entered getCustomer service with customer id! {}", customerId);
         Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
         if(optionalCustomer.isEmpty()) {
+            log.error("Cannot find customer at getCustomer Service");
             throw new CustomerNotFoundException("Invalid ID, Customer doesn't exist!");
         }
 
         Customer savedCustomer = optionalCustomer.get();
+        log.trace("Exited getCustomer service");
         return CustomerTransformer.customerToCustomerResponse(savedCustomer);
     }
 
