@@ -104,3 +104,112 @@ com.Kritiraj.SpringJPAHibernate.exception.CustomerNotFoundException: Invalid ID,
 15:39:39.129 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 15:39:39.182 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 15:39:39.281 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+15:39:48.785 [main] INFO  c.K.S.SpringJpaHibernateApplication - Starting SpringJpaHibernateApplication using Java 21.0.2 with PID 4800 (C:\Users\Kritiraj Chkaraborty\Desktop\DEV\Java (DSA+Springboot)\SpringBoot\SpringJPAHibernate\SpringJPAHibernate\target\classes started by Kritiraj Chkaraborty in C:\Users\Kritiraj Chkaraborty\Desktop\DEV\Java (DSA+Springboot)\SpringBoot\SpringJPAHibernate\SpringJPAHibernate)
+15:39:48.787 [main] DEBUG c.K.S.SpringJpaHibernateApplication - Running with Spring Boot v3.4.3, Spring v6.2.3
+15:39:48.788 [main] INFO  c.K.S.SpringJpaHibernateApplication - No active profile set, falling back to 1 default profile: "default"
+15:39:50.433 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+15:39:50.525 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 81 ms. Found 4 JPA repository interfaces.
+15:39:51.564 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+15:39:51.585 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+15:39:51.588 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+15:39:51.588 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+15:39:51.717 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+15:39:51.717 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2848 ms
+15:39:52.183 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+15:39:52.262 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+15:39:52.306 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+15:39:52.675 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+15:39:52.711 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+15:39:55.417 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@535be281
+15:39:55.420 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+15:39:55.534 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.36
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+15:39:56.565 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+15:39:56.666 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+15:39:56.999 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+15:39:58.048 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+15:39:58.139 [main] INFO  o.s.v.b.OptionalValidatorFactoryBean - Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Bean Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
+15:39:59.168 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 14 endpoints beneath base path '/actuator'
+15:39:59.253 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+15:39:59.277 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+15:39:59.291 [main] INFO  c.K.S.SpringJpaHibernateApplication - Started SpringJpaHibernateApplication in 11.751 seconds (process running for 12.326)
+15:40:23.976 [http-nio-8080-exec-3] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+15:40:23.977 [http-nio-8080-exec-3] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+15:40:23.979 [http-nio-8080-exec-3] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+15:40:24.026 [http-nio-8080-exec-3] TRACE c.K.S.controller.CustomerController - Entering finding customer controller
+15:40:24.026 [http-nio-8080-exec-3] TRACE c.K.S.service.CustomerService - Entered getCustomer service with customer id! 1
+15:40:24.114 [http-nio-8080-exec-3] TRACE c.K.S.service.CustomerService - Exited getCustomer service
+15:40:24.115 [http-nio-8080-exec-3] TRACE c.K.S.controller.CustomerController - Exiting finding customer controller
+15:40:27.136 [http-nio-8080-exec-4] TRACE c.K.S.controller.CustomerController - Entering finding customer controller
+15:40:27.136 [http-nio-8080-exec-4] TRACE c.K.S.service.CustomerService - Entered getCustomer service with customer id! 100
+15:40:27.139 [http-nio-8080-exec-4] ERROR c.K.S.service.CustomerService - Cannot find customer at getCustomer Service
+15:41:23.857 [http-nio-8080-exec-5] TRACE c.K.S.controller.CustomerController - Entering finding customer controller
+15:41:23.857 [http-nio-8080-exec-5] TRACE c.K.S.service.CustomerService - Entered getCustomer service with customer id! 1
+15:41:23.861 [http-nio-8080-exec-5] TRACE c.K.S.service.CustomerService - Exited getCustomer service
+15:41:23.861 [http-nio-8080-exec-5] TRACE c.K.S.controller.CustomerController - Exiting finding customer controller
+15:52:39.483 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+15:52:39.520 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+15:52:39.549 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+15:52:39.576 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+15:52:39.622 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+15:52:47.582 [main] INFO  c.K.S.SpringJpaHibernateApplication - Starting SpringJpaHibernateApplication using Java 21.0.2 with PID 20024 (C:\Users\Kritiraj Chkaraborty\Desktop\DEV\Java (DSA+Springboot)\SpringBoot\SpringJPAHibernate\SpringJPAHibernate\target\classes started by Kritiraj Chkaraborty in C:\Users\Kritiraj Chkaraborty\Desktop\DEV\Java (DSA+Springboot)\SpringBoot\SpringJPAHibernate\SpringJPAHibernate)
+15:52:47.584 [main] DEBUG c.K.S.SpringJpaHibernateApplication - Running with Spring Boot v3.4.3, Spring v6.2.3
+15:52:47.585 [main] INFO  c.K.S.SpringJpaHibernateApplication - No active profile set, falling back to 1 default profile: "default"
+15:52:49.327 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+15:52:49.415 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 76 ms. Found 4 JPA repository interfaces.
+15:52:50.494 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+15:52:50.512 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+15:52:50.514 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+15:52:50.514 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+15:52:50.582 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+15:52:50.582 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2906 ms
+15:52:51.080 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+15:52:51.153 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+15:52:51.198 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+15:52:51.533 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+15:52:51.576 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+15:52:54.548 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@a93c798
+15:52:54.550 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+15:52:54.700 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.36
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+15:52:55.704 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+15:52:55.808 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+15:52:56.279 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+15:52:57.171 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+15:52:57.252 [main] INFO  o.s.v.b.OptionalValidatorFactoryBean - Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Bean Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
+15:52:58.365 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 14 endpoints beneath base path '/actuator'
+15:52:58.460 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+15:52:58.485 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+15:52:58.501 [main] INFO  c.K.S.SpringJpaHibernateApplication - Started SpringJpaHibernateApplication in 12.31 seconds (process running for 12.917)
+15:53:12.798 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+15:53:12.799 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+15:53:12.802 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+15:53:12.907 [http-nio-8080-exec-2] TRACE c.K.S.controller.CustomerController - Entering finding customer controller
+15:53:12.908 [http-nio-8080-exec-2] TRACE c.K.S.service.CustomerService - Entered getCustomer service with customer id! 1
+15:53:13.004 [http-nio-8080-exec-2] TRACE c.K.S.service.CustomerService - Exited getCustomer service
+15:53:13.005 [http-nio-8080-exec-2] TRACE c.K.S.controller.CustomerController - Exiting finding customer controller
+15:53:15.950 [http-nio-8080-exec-3] TRACE c.K.S.controller.CustomerController - Entering finding customer controller
+15:53:15.952 [http-nio-8080-exec-3] TRACE c.K.S.service.CustomerService - Entered getCustomer service with customer id! 2
+15:53:15.958 [http-nio-8080-exec-3] TRACE c.K.S.service.CustomerService - Exited getCustomer service
+15:53:15.958 [http-nio-8080-exec-3] TRACE c.K.S.controller.CustomerController - Exiting finding customer controller
+15:53:18.692 [http-nio-8080-exec-4] TRACE c.K.S.controller.CustomerController - Entering finding customer controller
+15:53:18.694 [http-nio-8080-exec-4] TRACE c.K.S.service.CustomerService - Entered getCustomer service with customer id! 20
+15:53:18.703 [http-nio-8080-exec-4] ERROR c.K.S.service.CustomerService - Cannot find customer at getCustomer Service
+15:53:42.622 [http-nio-8080-exec-8] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'gender': Failed to convert value of type 'java.lang.String' to required type 'com.Kritiraj.SpringJPAHibernate.Enum.Gender'; Failed to convert from type [java.lang.String] to type [@org.springframework.web.bind.annotation.RequestParam com.Kritiraj.SpringJPAHibernate.Enum.Gender] for value [FALE]]
+15:55:53.118 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+15:55:53.137 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+15:55:53.144 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+15:55:53.148 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+15:55:53.166 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
