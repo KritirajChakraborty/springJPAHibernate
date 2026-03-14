@@ -38,19 +38,28 @@ public class CustomerService {
 
     public CustomerResponse getCustomer(int customerId) {
         log.trace("Entered getCustomer service with customer id! {}", customerId);
-        Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
-        if(optionalCustomer.isEmpty()) {
+//        Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
+//        if(optionalCustomer.isEmpty()) {
+//            log.error("Cannot find customer at getCustomer Service");
+//            throw new CustomerNotFoundException("Invalid ID, Customer doesn't exist!");
+//        }
+        //THIS IS MODERN WAY
+        Customer customer = customerRepository.findById(customerId).orElseThrow(() -> {
             log.error("Cannot find customer at getCustomer Service");
-            throw new CustomerNotFoundException("Invalid ID, Customer doesn't exist!");
-        }
+            return new CustomerNotFoundException("Invalid ID! Customer not found");
 
-        Customer savedCustomer = optionalCustomer.get();
+        });
+
+        //Customer savedCustomer = optionalCustomer.get();
         log.trace("Exited getCustomer service");
-        return CustomerTransformer.customerToCustomerResponse(savedCustomer);
+        return CustomerTransformer.customerToCustomerResponse(customer);
     }
 
     public List<CustomerResponse> getCustomersByGender(Gender gender) {
         List<Customer> customers = customerRepository.findByGender(gender);
+        if(customers.isEmpty()) {
+            throw new CustomerNotFoundException("Cannot find customers with gender ");
+        }
         List<CustomerResponse> customerResponses = new ArrayList<>();
         for(Customer customer : customers) {
             customerResponses.add(CustomerTransformer.customerToCustomerResponse(customer));
@@ -60,6 +69,9 @@ public class CustomerService {
 
     public List<CustomerResponse> getCustomersByGenderAndAge(Gender gender, int age) {
         List<Customer> customers = customerRepository.findByGenderAndAge(gender,age);
+        if(customers.isEmpty()) {
+            throw new CustomerNotFoundException("Cannot find customer with these details ");
+        }
         List<CustomerResponse> customerResponses = new ArrayList<>();
         for(Customer customer : customers) {
             customerResponses.add(CustomerTransformer.customerToCustomerResponse(customer));
@@ -69,6 +81,9 @@ public class CustomerService {
 
     public List<CustomerResponse> getCustomersByGenderAndAgeGreaterThan(Gender gender, int age) {
         List<Customer> customers = customerRepository.findByGenderAndAgeGreaterThan(gender,age);
+        if(customers.isEmpty()) {
+            throw new CustomerNotFoundException("Cannot find customers with ");
+        }
         List<CustomerResponse> customerResponses = new ArrayList<>();
         for(Customer customer : customers) {
             customerResponses.add(CustomerTransformer.customerToCustomerResponse(customer));
