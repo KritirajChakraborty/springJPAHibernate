@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 @Slf4j
 @Service
 public class CustomerService {
@@ -33,7 +32,7 @@ public class CustomerService {
         Customer savedCustomer = customerRepository.save(customer);
         meterRegistry.counter("custom.metric.numberOfCustomer").increment();
 
-        return CustomerTransformer.customerToCustomerResponse(customer);
+        return CustomerTransformer.customerToCustomerResponse(savedCustomer);
     }
 
     public CustomerResponse getCustomer(int customerId) {

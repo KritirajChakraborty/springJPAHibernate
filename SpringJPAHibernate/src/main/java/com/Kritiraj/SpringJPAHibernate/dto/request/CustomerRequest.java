@@ -1,15 +1,13 @@
 package com.Kritiraj.SpringJPAHibernate.dto.request;
 
 import com.Kritiraj.SpringJPAHibernate.Enum.Gender;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
+@Builder
 public class CustomerRequest {
 
     private String name;
