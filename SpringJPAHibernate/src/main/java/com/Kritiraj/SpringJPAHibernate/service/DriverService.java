@@ -2,6 +2,7 @@ package com.Kritiraj.SpringJPAHibernate.service;
 
 import com.Kritiraj.SpringJPAHibernate.dto.request.DriverRequest;
 import com.Kritiraj.SpringJPAHibernate.dto.response.DriverResponse;
+import com.Kritiraj.SpringJPAHibernate.exception.DriverDeletionException;
 import com.Kritiraj.SpringJPAHibernate.exception.DriverNotFoundException;
 import com.Kritiraj.SpringJPAHibernate.model.Driver;
 import com.Kritiraj.SpringJPAHibernate.repository.DriverRepository;
@@ -33,5 +34,17 @@ public class DriverService {
         Driver savedDriver = driver.get();
         return DriverTransformer.driverToDriverResponse(savedDriver);
 
+    }
+
+    public String deleteDriverById(int driverId) {
+
+        Driver driver = driverRepository.findById(driverId).orElseThrow(() -> new DriverNotFoundException(("Invalid ID! Cannot find Driver")));
+
+        boolean cabAvailable = driver.getCab().isAvailable();
+        if(!cabAvailable) {
+            throw new DriverDeletionException("Cannot delete driver! Ride is going on!");
+        }
+        driverRepository.delete(driver);
+        return "Driver Successfully Deleted!";
     }
 }

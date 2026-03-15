@@ -4,8 +4,10 @@ import com.Kritiraj.SpringJPAHibernate.Enum.Gender;
 import com.Kritiraj.SpringJPAHibernate.dto.request.CustomerRequest;
 import com.Kritiraj.SpringJPAHibernate.dto.request.CustomerUpdateRequest;
 import com.Kritiraj.SpringJPAHibernate.dto.response.CustomerResponse;
+import com.Kritiraj.SpringJPAHibernate.exception.CustomerDeletionException;
 import com.Kritiraj.SpringJPAHibernate.exception.CustomerNotFoundException;
 import com.Kritiraj.SpringJPAHibernate.model.Customer;
+import com.Kritiraj.SpringJPAHibernate.repository.BookingRepository;
 import com.Kritiraj.SpringJPAHibernate.repository.CustomerRepository;
 import com.Kritiraj.SpringJPAHibernate.transformer.CustomerTransformer;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -24,6 +26,9 @@ public class CustomerService {
 
     @Autowired
     MeterRegistry meterRegistry;
+
+    @Autowired
+    BookingRepository bookingRepository;
 
     public CustomerResponse addCustomer(CustomerRequest customerRequest) {
 
@@ -106,5 +111,20 @@ public class CustomerService {
         }
         Customer savedCustomer = customerRepository.save(customer);
         return CustomerTransformer.customerToCustomerResponse(savedCustomer);
+    }
+
+    public String deleteCustomerById(int customerId) {
+
+        Customer customer = customerRepository.findById(customerId).orElseThrow(()-> new CustomerNotFoundException("Invalid ID! Cannot delete customer"));
+
+        Long bookingsOfCustomer = bookingRepository.existsByCustomerId(customer.getCustomerId());
+
+        if(bookingsOfCustomer > 0) {
+            throw new CustomerDeletionException("Sorry! Cant delete customer. Already in a ride!");
+        }
+
+        customerRepository.deleteById(customerId);
+        return "Customer Deleted SuccessFully!";
+
     }
 }

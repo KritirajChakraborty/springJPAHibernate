@@ -7,6 +7,7 @@ import com.Kritiraj.SpringJPAHibernate.dto.response.CustomerResponse;
 import com.Kritiraj.SpringJPAHibernate.service.CustomerService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -64,6 +65,12 @@ public class CustomerController {
                                                                @PathVariable("id") int customer_id) {
         CustomerResponse customerResponse = customerService.updateCustomerData(customerUpdateRequest, customer_id);
         return new ResponseEntity<>(customerResponse,HttpStatus.ACCEPTED);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCustomerById(@PathVariable("id") int customerId) {
+        String response = customerService.deleteCustomerById(customerId);
+        return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
 

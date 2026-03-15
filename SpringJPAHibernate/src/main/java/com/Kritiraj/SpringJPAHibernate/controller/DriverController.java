@@ -25,4 +25,10 @@ public class DriverController {
         DriverResponse driverResponse = driverService.getDriverById(driverId);
         return ResponseEntity.ok(driverResponse);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteDriverbyId(@PathVariable("id") int driverId) {
+        String message = driverService.deleteDriverById(driverId);
+        return ResponseEntity.ok(message);
+    }
 }

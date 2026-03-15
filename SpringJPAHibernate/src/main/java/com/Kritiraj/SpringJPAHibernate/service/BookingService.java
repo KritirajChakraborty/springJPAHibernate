@@ -1,8 +1,8 @@
 package com.Kritiraj.SpringJPAHibernate.service;
 
-import com.Kritiraj.SpringJPAHibernate.Enum.TripStatus;
 import com.Kritiraj.SpringJPAHibernate.dto.request.BookingRequest;
 import com.Kritiraj.SpringJPAHibernate.dto.response.BookingResponse;
+import com.Kritiraj.SpringJPAHibernate.exception.CabNotAssociatedWithAnyDriverException;
 import com.Kritiraj.SpringJPAHibernate.exception.CabNotAvailableException;
 import com.Kritiraj.SpringJPAHibernate.exception.CustomerNotFoundException;
 import com.Kritiraj.SpringJPAHibernate.model.Booking;
@@ -19,7 +19,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -55,11 +54,15 @@ public class BookingService {
         Booking savedBooking = bookingRepository.save(booking);
         customer.getBookings().add(savedBooking);
 
-        Driver driver = driverRepository.findDriverByCabId(cab.getCabId());
-        driver.getBookings().add(savedBooking);
+        Optional<Driver> driver = driverRepository.findDriverByCabId(cab.getCabId());
+        if(driver.isEmpty()) {
+            throw new CabNotAssociatedWithAnyDriverException("Sorry! Cab does not have a driver!");
+        }
+        Driver fetchedDriver = driver.get();
+        fetchedDriver.getBookings().add(savedBooking);
 
         Customer savedCustomer = customerRepository.save(customer);
-        Driver savedDriver = driverRepository.save(driver);
+        Driver savedDriver = driverRepository.save(fetchedDriver);
 
         sendEmail(savedCustomer);
         return BookingTransformer.bookingToBookingResponse(savedBooking,savedCustomer,cab,savedDriver);
