@@ -12,33 +12,49 @@ import java.time.LocalDateTime;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(CustomerNotFoundException.class)
-    public ResponseEntity<?> customerExceptionHandler(CustomerNotFoundException e) {
+    public ResponseEntity<ErrorResponse> customerExceptionHandler(CustomerNotFoundException e) {
         ErrorResponse error = new ErrorResponse(LocalDateTime.now(),e.getMessage());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(CustomerDeletionException.class)
-    public ResponseEntity<?> customerExceptionHandler(CustomerDeletionException e) {
+    public ResponseEntity<ErrorResponse> handleCustomerDeletionHandler(CustomerDeletionException e) {
         ErrorResponse error = new ErrorResponse(LocalDateTime.now(),e.getMessage());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(DriverDeletionException.class)
-    public ResponseEntity<?> customerExceptionHandler(DriverDeletionException e) {
+    public ResponseEntity<ErrorResponse> handleDriverDeletionHandler(DriverDeletionException e) {
         ErrorResponse error = new ErrorResponse(LocalDateTime.now(),e.getMessage());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(CabNotFoundException.class)
-    public ResponseEntity<?> customerExceptionHandler(CabNotFoundException e) {
+    public ResponseEntity<ErrorResponse> handleCabExceptionHandler(CabNotFoundException e) {
         ErrorResponse error = new ErrorResponse(LocalDateTime.now(),e.getMessage());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(CabDeletionException.class)
-    public ResponseEntity<?> customerExceptionHandler(CabDeletionException e) {
+    public ResponseEntity<ErrorResponse> handleCabDeletionHandler(CabDeletionException e) {
         ErrorResponse error = new ErrorResponse(LocalDateTime.now(),e.getMessage());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(CabNotAssociatedWithAnyDriverException.class)
-    public ResponseEntity<?> customerExceptionHandler(CabNotAssociatedWithAnyDriverException e) {
+    public ResponseEntity<ErrorResponse> handleCabExceptionHandler(CabNotAssociatedWithAnyDriverException e) {
+        ErrorResponse error = new ErrorResponse(LocalDateTime.now(),e.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
+    }
+    @ExceptionHandler(BookingNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleBookingNotFoundException(BookingNotFoundException e) {
         ErrorResponse error = new ErrorResponse(LocalDateTime.now(),e.getMessage());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(BookingDeletionException.class)
+    public ResponseEntity<ErrorResponse> handleBookingDeletionException(BookingDeletionException e) {
+        ErrorResponse error = new ErrorResponse(LocalDateTime.now(),e.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+    //GENERIC EXCEPTION HANDLER TO CATCH UNEXPECTED ERRORS
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleGeneralException(Exception e) {
+        ErrorResponse error = new ErrorResponse(LocalDateTime.now(),e.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

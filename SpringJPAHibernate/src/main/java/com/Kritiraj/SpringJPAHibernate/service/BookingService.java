@@ -1,10 +1,9 @@
 package com.Kritiraj.SpringJPAHibernate.service;
 
+import com.Kritiraj.SpringJPAHibernate.Enum.TripStatus;
 import com.Kritiraj.SpringJPAHibernate.dto.request.BookingRequest;
 import com.Kritiraj.SpringJPAHibernate.dto.response.BookingResponse;
-import com.Kritiraj.SpringJPAHibernate.exception.CabNotAssociatedWithAnyDriverException;
-import com.Kritiraj.SpringJPAHibernate.exception.CabNotAvailableException;
-import com.Kritiraj.SpringJPAHibernate.exception.CustomerNotFoundException;
+import com.Kritiraj.SpringJPAHibernate.exception.*;
 import com.Kritiraj.SpringJPAHibernate.model.Booking;
 import com.Kritiraj.SpringJPAHibernate.model.Cab;
 import com.Kritiraj.SpringJPAHibernate.model.Customer;
@@ -68,6 +67,17 @@ public class BookingService {
         return BookingTransformer.bookingToBookingResponse(savedBooking,savedCustomer,cab,savedDriver);
 
     }
+
+    public String deleteBookingById(int id) {
+
+        Booking booking = bookingRepository.findById(id).orElseThrow(() -> new BookingNotFoundException("Booking Not Found! Invalid ID"));
+        if(booking.getTripStatus() == TripStatus.ONGOING) {
+            throw new BookingDeletionException("Cannot Delete Booking! Trip ONGOING!");
+        }
+        bookingRepository.delete(booking);
+        return "Booking with " + booking.getBookingId() + " successfully deleted!";
+    }
+
     private void sendEmail(Customer customer) {
 
         String body = "Congrats " + customer.getName() + ". Your booking is gachi confirmed!";
@@ -79,4 +89,5 @@ public class BookingService {
         simpleEmailMessage.setText(body);
         javaMailSender.send(simpleEmailMessage);
     }
+
 }
