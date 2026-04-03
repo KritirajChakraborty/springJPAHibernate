@@ -20,8 +20,10 @@ public interface DriverRepository extends JpaRepository<Driver, Integer> {
     @Query(value="select * from driver d where d.cab_id = :cabId", nativeQuery = true)
     Optional<Driver> findDriverByCabId(@Param("cabId") int cabId);
 
-    @Query(value="select * from driver limit :limit offset :offset",nativeQuery = true)
-    List<Driver> findDriversBasedOnPaginationWithNativeQuery(@Param("offset")int offset,@Param("limit") int limit);
+    //direction will not work because :direction is not treated as SQL reserved word ASC/DESC rather value,
+    //here best option for native query is to use EntityManager but input should be validated else prone to SQL injection
+    @Query(value="select * from driver order by :sortby :direction limit :limit offset :offset",nativeQuery = true)
+    List<Driver> findDriversBasedOnPaginationWithNativeQuery(@Param("offset")int offset,@Param("limit") int limit, @Param("sortby") String sortBy, @Param("direction") String direction);
 
 
     //this is not needed as while fetching the driver we fethced the cab object which has available field

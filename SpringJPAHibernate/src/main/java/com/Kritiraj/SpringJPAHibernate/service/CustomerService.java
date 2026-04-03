@@ -1,6 +1,7 @@
 package com.Kritiraj.SpringJPAHibernate.service;
 
 import com.Kritiraj.SpringJPAHibernate.Enum.Gender;
+import com.Kritiraj.SpringJPAHibernate.Enum.SortBy;
 import com.Kritiraj.SpringJPAHibernate.dto.request.CustomerRequest;
 import com.Kritiraj.SpringJPAHibernate.dto.request.CustomerUpdateRequest;
 import com.Kritiraj.SpringJPAHibernate.dto.response.CustomerResponse;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -133,7 +135,7 @@ public class CustomerService {
 
     }
 
-    public List<CustomerResponse> getCustomerBasedOnPagination(int page, int size)  {
+    public List<CustomerResponse> getCustomerBasedOnPagination(int page, int size, String sortBy, SortBy direction)  {
 
 
         if(page < 0 || size <= 0 || size > 10 ) {
@@ -146,7 +148,9 @@ public class CustomerService {
             throw new IllegalArgumentException("Page number out of range");
         }
 
-        Pageable pageable = PageRequest.of(page,size);
+        Pageable pageable = PageRequest.of(page,
+                                            size,
+                                            Sort.by(Sort.Direction.fromString(direction.toString()), sortBy));
         //List<Customer> customers = customerRepository.findAll(pageable).getContent(); //findall is derived
         // ABOVE IS DERIVED QUERY, BELOW IS CUSTOM QUERY
          List<Customer> customers = customerRepository.findBasedOnPagination(pageable); //SEE REPO NOW sL-1

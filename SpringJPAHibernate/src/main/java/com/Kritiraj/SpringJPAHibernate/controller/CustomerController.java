@@ -1,6 +1,7 @@
 package com.Kritiraj.SpringJPAHibernate.controller;
 
 import com.Kritiraj.SpringJPAHibernate.Enum.Gender;
+import com.Kritiraj.SpringJPAHibernate.Enum.SortBy;
 import com.Kritiraj.SpringJPAHibernate.dto.request.CustomerRequest;
 import com.Kritiraj.SpringJPAHibernate.dto.request.CustomerUpdateRequest;
 import com.Kritiraj.SpringJPAHibernate.dto.response.CustomerResponse;
@@ -74,8 +75,11 @@ public class CustomerController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<CustomerResponse>> getCustomerBasedOnPagination(@RequestParam("page") int page,@RequestParam("size") int size) {
-        List<CustomerResponse> list = customerService.getCustomerBasedOnPagination(page,size);
+    public ResponseEntity<List<CustomerResponse>> getCustomerBasedOnPagination(@RequestParam("page") int page,
+                                                                               @RequestParam("size") int size,
+                                                                               @RequestParam("sortBy") String sortBy,
+                                                                               @RequestParam("direction") SortBy direction) {
+        List<CustomerResponse> list = customerService.getCustomerBasedOnPagination(page,size,sortBy,direction);
         return new ResponseEntity<>(list,HttpStatus.OK);
     }
 

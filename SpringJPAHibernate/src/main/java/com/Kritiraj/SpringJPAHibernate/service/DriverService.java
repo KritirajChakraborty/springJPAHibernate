@@ -1,5 +1,6 @@
 package com.Kritiraj.SpringJPAHibernate.service;
 
+import com.Kritiraj.SpringJPAHibernate.Enum.SortBy;
 import com.Kritiraj.SpringJPAHibernate.dto.request.DriverRequest;
 import com.Kritiraj.SpringJPAHibernate.dto.response.DriverResponse;
 import com.Kritiraj.SpringJPAHibernate.exception.DriverDeletionException;
@@ -53,7 +54,7 @@ public class DriverService {
         return "Driver Successfully Deleted!";
     }
 
-    public List<DriverResponse> getDriversBasedOnPagination(int page, int size)  {
+    public List<DriverResponse> getDriversBasedOnPagination(int page, int size, String sortBy, SortBy direction)  {
 
         if(page < 0 || size <= 0 || size > 10)  {
             throw new IllegalArgumentException("Invalid Input. See page or size");
@@ -67,7 +68,7 @@ public class DriverService {
         int limit = size;
         int offset = page*size;
 
-        List<Driver> drivers = driverRepository.findDriversBasedOnPaginationWithNativeQuery(offset,limit);
+        List<Driver> drivers = driverRepository.findDriversBasedOnPaginationWithNativeQuery(offset,limit,sortBy,direction.toString());
 
         if(drivers.isEmpty()) {
             return Collections.emptyList();

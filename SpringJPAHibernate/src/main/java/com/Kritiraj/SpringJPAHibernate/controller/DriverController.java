@@ -1,9 +1,11 @@
 package com.Kritiraj.SpringJPAHibernate.controller;
 
+import com.Kritiraj.SpringJPAHibernate.Enum.SortBy;
 import com.Kritiraj.SpringJPAHibernate.dto.request.DriverRequest;
 import com.Kritiraj.SpringJPAHibernate.dto.response.DriverResponse;
 import com.Kritiraj.SpringJPAHibernate.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,8 +38,11 @@ public class DriverController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<DriverResponse>> getDriverBasedOnPagination(@RequestParam("page") int page, @RequestParam("size") int size) {
-        List<DriverResponse> drivers = driverService.getDriversBasedOnPagination(page,size);
+    public ResponseEntity<List<DriverResponse>> getDriverBasedOnPagination(@RequestParam("page") int page,
+                                                                           @RequestParam("size") int size,
+                                                                           @RequestParam("sortBy") String sortBy,
+                                                                           @RequestParam("direction") SortBy direction) {
+        List<DriverResponse> drivers = driverService.getDriversBasedOnPagination(page,size,sortBy,direction);
         return new ResponseEntity<>(drivers, HttpStatus.OK);
     }
 }
