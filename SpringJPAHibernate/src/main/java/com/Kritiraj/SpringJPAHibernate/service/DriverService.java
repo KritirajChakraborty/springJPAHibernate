@@ -8,8 +8,13 @@ import com.Kritiraj.SpringJPAHibernate.model.Driver;
 import com.Kritiraj.SpringJPAHibernate.repository.DriverRepository;
 import com.Kritiraj.SpringJPAHibernate.transformer.DriverTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -46,5 +51,32 @@ public class DriverService {
         }
         driverRepository.delete(driver);
         return "Driver Successfully Deleted!";
+    }
+
+    public List<DriverResponse> getDriversBasedOnPagination(int page, int size)  {
+
+        if(page < 0 || size <= 0 || size > 10)  {
+            throw new IllegalArgumentException("Invalid Input. See page or size");
+        }
+        long totalDrivers = driverRepository.count();
+        long totalPages = (totalDrivers + size - 1) / size;
+        if(totalPages > 0 && page >= totalPages) {
+            throw new IllegalArgumentException("Page Number Out Of Range!");
+        }
+
+        int limit = size;
+        int offset = page*size;
+
+        List<Driver> drivers = driverRepository.findDriversBasedOnPaginationWithNativeQuery(offset,limit);
+
+        if(drivers.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        List<DriverResponse> driverResponses = new ArrayList<>();
+        for(Driver driver : drivers) {
+            driverResponses.add(DriverTransformer.driverToDriverResponse(driver));
+        }
+        return driverResponses;
     }
 }

@@ -73,6 +73,12 @@ public class CustomerController {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<CustomerResponse>> getCustomerBasedOnPagination(@RequestParam("page") int page,@RequestParam("size") int size) {
+        List<CustomerResponse> list = customerService.getCustomerBasedOnPagination(page,size);
+        return new ResponseEntity<>(list,HttpStatus.OK);
+    }
+
 
 
 

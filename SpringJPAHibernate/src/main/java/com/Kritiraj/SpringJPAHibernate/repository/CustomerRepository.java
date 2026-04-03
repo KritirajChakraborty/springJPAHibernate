@@ -2,6 +2,8 @@ package com.Kritiraj.SpringJPAHibernate.repository;
 
 import com.Kritiraj.SpringJPAHibernate.Enum.Gender;
 import com.Kritiraj.SpringJPAHibernate.model.Customer;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -33,6 +35,11 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     //custom query using Query and HQL
     @Query("select c from Customer c where c.gender = :gender and c.age > :age")
     List<Customer> findByGenderAndAgeGreaterThan(@Param("gender") Gender gender, @Param("age") int age);
+
+    //Sl-1
+    @Query("select c from Customer c")
+    List<Customer> findBasedOnPagination(Pageable pageable);
+
 
     //using native query and SQL
     //@Query(value = "select * from customer where gender = :gender and age > :age", nativeQuery = true)

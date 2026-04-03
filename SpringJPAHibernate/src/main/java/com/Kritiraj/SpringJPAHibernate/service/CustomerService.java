@@ -13,9 +13,14 @@ import com.Kritiraj.SpringJPAHibernate.transformer.CustomerTransformer;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 @Slf4j
 @Service
@@ -126,5 +131,34 @@ public class CustomerService {
         customerRepository.deleteById(customerId);
         return "Customer Deleted SuccessFully!";
 
+    }
+
+    public List<CustomerResponse> getCustomerBasedOnPagination(int page, int size)  {
+
+
+        if(page < 0 || size <= 0 || size > 10 ) {
+            throw new IllegalArgumentException("Invalid Input. See page or size");
+        }
+
+        Long totalCustomers = customerRepository.count();
+        Long totalPages = (totalCustomers + size - 1) / size;
+        if(totalPages > 0 && page >= totalPages) {
+            throw new IllegalArgumentException("Page number out of range");
+        }
+
+        Pageable pageable = PageRequest.of(page,size);
+        //List<Customer> customers = customerRepository.findAll(pageable).getContent(); //findall is derived
+        // ABOVE IS DERIVED QUERY, BELOW IS CUSTOM QUERY
+         List<Customer> customers = customerRepository.findBasedOnPagination(pageable); //SEE REPO NOW sL-1
+
+        if(customers.isEmpty()) {
+            return Collections.emptyList();
+        }
+        List<CustomerResponse> customerResponses = new ArrayList<>();
+        for(Customer customer : customers) {
+            CustomerResponse customerResponse = CustomerTransformer.customerToCustomerResponse(customer);
+            customerResponses.add(customerResponse);
+        }
+        return customerResponses;
     }
 }

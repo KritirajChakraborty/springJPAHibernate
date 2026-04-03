@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -18,6 +19,9 @@ public interface DriverRepository extends JpaRepository<Driver, Integer> {
     //Native SQL below
     @Query(value="select * from driver d where d.cab_id = :cabId", nativeQuery = true)
     Optional<Driver> findDriverByCabId(@Param("cabId") int cabId);
+
+    @Query(value="select * from driver limit :limit offset :offset",nativeQuery = true)
+    List<Driver> findDriversBasedOnPaginationWithNativeQuery(@Param("offset")int offset,@Param("limit") int limit);
 
 
     //this is not needed as while fetching the driver we fethced the cab object which has available field

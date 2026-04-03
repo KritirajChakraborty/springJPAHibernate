@@ -4,8 +4,11 @@ import com.Kritiraj.SpringJPAHibernate.dto.request.DriverRequest;
 import com.Kritiraj.SpringJPAHibernate.dto.response.DriverResponse;
 import com.Kritiraj.SpringJPAHibernate.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/driver")
@@ -30,5 +33,11 @@ public class DriverController {
     public ResponseEntity<String> deleteDriverbyId(@PathVariable("id") int driverId) {
         String message = driverService.deleteDriverById(driverId);
         return ResponseEntity.ok(message);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<DriverResponse>> getDriverBasedOnPagination(@RequestParam("page") int page, @RequestParam("size") int size) {
+        List<DriverResponse> drivers = driverService.getDriversBasedOnPagination(page,size);
+        return new ResponseEntity<>(drivers, HttpStatus.OK);
     }
 }
