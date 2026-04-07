@@ -3,6 +3,7 @@ package com.Kritiraj.SpringJPAHibernate.service;
 import com.Kritiraj.SpringJPAHibernate.Enum.TripStatus;
 import com.Kritiraj.SpringJPAHibernate.dto.request.BookingRequest;
 import com.Kritiraj.SpringJPAHibernate.dto.response.BookingResponse;
+import com.Kritiraj.SpringJPAHibernate.dto.response.BookingsResponse;
 import com.Kritiraj.SpringJPAHibernate.exception.*;
 import com.Kritiraj.SpringJPAHibernate.model.Booking;
 import com.Kritiraj.SpringJPAHibernate.model.Cab;
@@ -18,6 +19,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -90,4 +93,50 @@ public class BookingService {
         javaMailSender.send(simpleEmailMessage);
     }
 
+    public List<BookingsResponse> getAllBookingsForCustomer(int customerId) {
+
+        Customer customer = customerRepository.findById(customerId).orElse(null);
+
+        if(customer == null) {
+            throw new CustomerNotFoundException("Sorry! Cannot find bookings because customer doesnt exists!");
+        }
+
+        List<Booking> bookings = bookingRepository.findBookingsByCustomer(customerId);
+
+        if(bookings.isEmpty()) {
+            throw new BookingNotFoundException("Customer doesnt have bookings!!");
+        }
+
+        List<BookingsResponse> bookingsResponses = new ArrayList<>();
+
+        for(Booking booking : bookings) {
+            bookingsResponses.add(BookingTransformer.bookingToBookingsResponse(booking));
+        }
+
+        return bookingsResponses;
+    }
+
+    public List<BookingsResponse> getAllTripsForDriver(int driverId) {
+
+        Driver driver = driverRepository.findById(driverId).orElse(null);
+
+        if(driver == null) {
+            throw new DriverNotFoundException("Sorry! Driver does not exist!");
+        }
+
+        List<Booking> trips = bookingRepository.findBookingsByDriver(driverId);
+
+        if(trips.isEmpty()) {
+            throw new BookingNotFoundException("Driver has not completed any trip!");
+        }
+
+        List<BookingsResponse> bookingsResponses = new ArrayList<>();
+
+        for(Booking trip : trips) {
+            bookingsResponses.add(BookingTransformer.bookingToBookingsResponse(trip));
+        }
+
+        return bookingsResponses;
+
+    }
 }

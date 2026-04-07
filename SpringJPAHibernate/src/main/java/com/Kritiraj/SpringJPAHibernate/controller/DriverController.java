@@ -2,10 +2,12 @@ package com.Kritiraj.SpringJPAHibernate.controller;
 
 import com.Kritiraj.SpringJPAHibernate.Enum.SortBy;
 import com.Kritiraj.SpringJPAHibernate.dto.request.DriverRequest;
+import com.Kritiraj.SpringJPAHibernate.dto.response.BookingResponse;
+import com.Kritiraj.SpringJPAHibernate.dto.response.BookingsResponse;
 import com.Kritiraj.SpringJPAHibernate.dto.response.DriverResponse;
+import com.Kritiraj.SpringJPAHibernate.service.BookingService;
 import com.Kritiraj.SpringJPAHibernate.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,9 @@ public class DriverController {
 
     @Autowired
     DriverService driverService;
+
+    @Autowired
+    BookingService bookingService;
 
     @PostMapping("/add")
     public ResponseEntity<DriverResponse> addDriver(@RequestBody DriverRequest driverRequest) {
@@ -44,5 +49,11 @@ public class DriverController {
                                                                            @RequestParam("direction") SortBy direction) {
         List<DriverResponse> drivers = driverService.getDriversBasedOnPagination(page,size,sortBy,direction);
         return new ResponseEntity<>(drivers, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/history")
+    public ResponseEntity<List<BookingsResponse>> getTripsDoneByDone(@PathVariable("id") int driverId) {
+        List<BookingsResponse> trips = bookingService.getAllTripsForDriver(driverId);
+        return new ResponseEntity<>(trips,HttpStatus.OK);
     }
 }

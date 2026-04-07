@@ -4,7 +4,11 @@ import com.Kritiraj.SpringJPAHibernate.Enum.Gender;
 import com.Kritiraj.SpringJPAHibernate.Enum.SortBy;
 import com.Kritiraj.SpringJPAHibernate.dto.request.CustomerRequest;
 import com.Kritiraj.SpringJPAHibernate.dto.request.CustomerUpdateRequest;
+import com.Kritiraj.SpringJPAHibernate.dto.response.BookingResponse;
+import com.Kritiraj.SpringJPAHibernate.dto.response.BookingsResponse;
 import com.Kritiraj.SpringJPAHibernate.dto.response.CustomerResponse;
+import com.Kritiraj.SpringJPAHibernate.model.Booking;
+import com.Kritiraj.SpringJPAHibernate.service.BookingService;
 import com.Kritiraj.SpringJPAHibernate.service.CustomerService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +27,9 @@ public class CustomerController {
 
     @Autowired
     CustomerService customerService;
+
+    @Autowired
+    BookingService bookingService;
 
     @PostMapping("/add")
     public ResponseEntity<CustomerResponse> addCustomer(@RequestBody CustomerRequest customerRequest) {
@@ -81,6 +88,12 @@ public class CustomerController {
                                                                                @RequestParam("direction") SortBy direction) {
         List<CustomerResponse> list = customerService.getCustomerBasedOnPagination(page,size,sortBy,direction);
         return new ResponseEntity<>(list,HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/bookings")
+    public ResponseEntity<List<BookingsResponse>> getAllBookingsForCustomer(@PathVariable("id") int customerId) {
+        List<BookingsResponse> bookings = bookingService.getAllBookingsForCustomer(customerId);
+        return new ResponseEntity<>(bookings,HttpStatus.OK);
     }
 
 

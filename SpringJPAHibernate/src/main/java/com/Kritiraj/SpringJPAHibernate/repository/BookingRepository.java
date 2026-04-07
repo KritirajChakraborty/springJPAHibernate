@@ -6,10 +6,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking,Integer> {
 
     @Query(value = "select exists(select * from booking where customer_id = :customerId)", nativeQuery = true)
     Long existsByCustomerId(@Param("customerId") int customerId);
+
+    @Query(value = "select * from booking where customer_id = :customerId", nativeQuery = true)
+    List<Booking> findBookingsByCustomer(@Param("customerId") int customerId);
+
+    @Query(value = "select * from booking where driver_id = :driverId", nativeQuery = true)
+    List<Booking> findBookingsByDriver(@Param("driverId") int driverId);
 }

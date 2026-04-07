@@ -2,10 +2,7 @@ package com.Kritiraj.SpringJPAHibernate.transformer;
 
 import com.Kritiraj.SpringJPAHibernate.Enum.TripStatus;
 import com.Kritiraj.SpringJPAHibernate.dto.request.BookingRequest;
-import com.Kritiraj.SpringJPAHibernate.dto.response.BookingResponse;
-import com.Kritiraj.SpringJPAHibernate.dto.response.CabResponse;
-import com.Kritiraj.SpringJPAHibernate.dto.response.CustomerResponse;
-import com.Kritiraj.SpringJPAHibernate.dto.response.DriverResponse;
+import com.Kritiraj.SpringJPAHibernate.dto.response.*;
 import com.Kritiraj.SpringJPAHibernate.model.Booking;
 import com.Kritiraj.SpringJPAHibernate.model.Cab;
 import com.Kritiraj.SpringJPAHibernate.model.Customer;
@@ -38,6 +35,19 @@ public class BookingTransformer {
                 .lastUpdateAt(booking.getLastUpdateAt())
                 .customer(customerResponse)
                 .cab(cabResponse)
+                .build();
+    }
+
+    public static BookingsResponse bookingToBookingsResponse(Booking booking) {
+
+        return BookingsResponse.builder()
+                .pickup(booking.getPickup())
+                .destination(booking.getDestination())
+                .billAmount(booking.getBillAmount())
+                .tripStatus(booking.getTripStatus())
+                .tripDistanceInKM(booking.getTripDistanceInKM())
+                .bookedAt(booking.getBookedAt())
+                .lastUpdateAt(booking.getLastUpdateAt())
                 .build();
     }
 }
