@@ -3,6 +3,7 @@ package com.Kritiraj.SpringJPAHibernate.service;
 import com.Kritiraj.SpringJPAHibernate.Enum.SortBy;
 import com.Kritiraj.SpringJPAHibernate.dto.request.DriverRequest;
 import com.Kritiraj.SpringJPAHibernate.dto.response.DriverResponse;
+import com.Kritiraj.SpringJPAHibernate.dto.response.MostActiveDriverResponse;
 import com.Kritiraj.SpringJPAHibernate.exception.DriverDeletionException;
 import com.Kritiraj.SpringJPAHibernate.exception.DriverNotFoundException;
 import com.Kritiraj.SpringJPAHibernate.model.Driver;
@@ -81,10 +82,10 @@ public class DriverService {
         return driverResponses;
     }
 
-    public DriverResponse getMostActiveDriver() {
+    public MostActiveDriverResponse getMostActiveDriver() {
 
-        Driver driver = driverRepository.findMostActiveDriver();
-        return DriverTransformer.driverToDriverResponse(driver);
+        return driverRepository.findMostActiveDriver();
+
 
     }
 }

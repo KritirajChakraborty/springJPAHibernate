@@ -1,5 +1,6 @@
 package com.Kritiraj.SpringJPAHibernate.repository;
 
+import com.Kritiraj.SpringJPAHibernate.dto.response.MostActiveDriverResponse;
 import com.Kritiraj.SpringJPAHibernate.model.Driver;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -26,15 +27,15 @@ public interface DriverRepository extends JpaRepository<Driver, Integer> {
     List<Driver> findDriversBasedOnPaginationWithNativeQuery(@Param("offset")int offset,@Param("limit") int limit, @Param("sortby") String sortBy, @Param("direction") String direction);
 
     @Query(value= """
-            select d.*
+            select d.driver_id,d.name,d.age,d.email_id,d.cab_id,count(b.driver_id) as totalTrips
             from driver d
-            join booking b
+            left join booking b
             on d.driver_id = b.driver_id
-            group by b.driver_id
+            group by d.driver_id
             order by count(b.driver_id) desc
             limit 1
             """, nativeQuery = true)
-    Driver findMostActiveDriver();
+    MostActiveDriverResponse findMostActiveDriver();
 
 
     //this is not needed as while fetching the driver we fethced the cab object which has available field

@@ -5,6 +5,7 @@ import com.Kritiraj.SpringJPAHibernate.dto.request.DriverRequest;
 import com.Kritiraj.SpringJPAHibernate.dto.response.BookingResponse;
 import com.Kritiraj.SpringJPAHibernate.dto.response.BookingsResponse;
 import com.Kritiraj.SpringJPAHibernate.dto.response.DriverResponse;
+import com.Kritiraj.SpringJPAHibernate.dto.response.MostActiveDriverResponse;
 import com.Kritiraj.SpringJPAHibernate.service.BookingService;
 import com.Kritiraj.SpringJPAHibernate.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,8 +59,8 @@ public class DriverController {
     }
 
     @GetMapping("/top")
-    public ResponseEntity<DriverResponse> getMostActiveDriver() {
-        DriverResponse driverResponse = driverService.getMostActiveDriver();
+    public ResponseEntity<MostActiveDriverResponse> getMostActiveDriver() {
+        MostActiveDriverResponse driverResponse = driverService.getMostActiveDriver();
         return new ResponseEntity<>(driverResponse,HttpStatus.OK);
     }
 
