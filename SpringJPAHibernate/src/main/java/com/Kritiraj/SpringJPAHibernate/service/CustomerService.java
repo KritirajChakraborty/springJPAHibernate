@@ -5,8 +5,10 @@ import com.Kritiraj.SpringJPAHibernate.Enum.SortBy;
 import com.Kritiraj.SpringJPAHibernate.dto.request.CustomerRequest;
 import com.Kritiraj.SpringJPAHibernate.dto.request.CustomerUpdateRequest;
 import com.Kritiraj.SpringJPAHibernate.dto.response.CustomerResponse;
+import com.Kritiraj.SpringJPAHibernate.dto.response.CustomerStatisticsResponse;
 import com.Kritiraj.SpringJPAHibernate.exception.CustomerDeletionException;
 import com.Kritiraj.SpringJPAHibernate.exception.CustomerNotFoundException;
+import com.Kritiraj.SpringJPAHibernate.model.Booking;
 import com.Kritiraj.SpringJPAHibernate.model.Customer;
 import com.Kritiraj.SpringJPAHibernate.repository.BookingRepository;
 import com.Kritiraj.SpringJPAHibernate.repository.CustomerRepository;
@@ -164,5 +166,41 @@ public class CustomerService {
             customerResponses.add(customerResponse);
         }
         return customerResponses;
+    }
+
+    public CustomerStatisticsResponse getCustomerStatistics(int customerId) {
+
+        Customer customer = customerRepository.findById(customerId).orElse(null);
+
+        if(customer == null) {
+            throw new CustomerNotFoundException("Sorry! Customer does not exist");
+        }
+
+        List<Booking> bookings = bookingRepository.findBookingsByCustomer(customerId);
+
+        if(bookings.isEmpty()) {
+            return CustomerStatisticsResponse.builder()
+                    .customerName(customer.getName())
+                    .totalAmountSpent(0)
+                    .totalTrips(0)
+                    .lastBooking(null)
+                    .build();
+        }
+
+        double totalAmountSpent = 0;
+        int totalTrips = bookings.size();
+        Booking lastTrip = bookings.getLast();
+
+        for(Booking booking : bookings) {
+            totalAmountSpent += booking.getBillAmount();
+        }
+
+        return CustomerStatisticsResponse.builder()
+                .customerName(customer.getName())
+                .totalTrips(totalTrips)
+                .totalAmountSpent(totalAmountSpent)
+                .lastBooking(lastTrip)
+                .build();
+
     }
 }

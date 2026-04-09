@@ -80,4 +80,11 @@ public class DriverService {
         }
         return driverResponses;
     }
+
+    public DriverResponse getMostActiveDriver() {
+
+        Driver driver = driverRepository.findMostActiveDriver();
+        return DriverTransformer.driverToDriverResponse(driver);
+
+    }
 }

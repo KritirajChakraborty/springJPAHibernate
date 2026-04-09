@@ -52,8 +52,15 @@ public class DriverController {
     }
 
     @GetMapping("/{id}/history")
-    public ResponseEntity<List<BookingsResponse>> getTripsDoneByDone(@PathVariable("id") int driverId) {
+    public ResponseEntity<List<BookingsResponse>> getTripsDoneByDriver(@PathVariable("id") int driverId) {
         List<BookingsResponse> trips = bookingService.getAllTripsForDriver(driverId);
         return new ResponseEntity<>(trips,HttpStatus.OK);
     }
+
+    @GetMapping("/top")
+    public ResponseEntity<DriverResponse> getMostActiveDriver() {
+        DriverResponse driverResponse = driverService.getMostActiveDriver();
+        return new ResponseEntity<>(driverResponse,HttpStatus.OK);
+    }
+
 }

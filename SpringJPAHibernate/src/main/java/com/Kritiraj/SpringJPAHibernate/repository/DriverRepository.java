@@ -25,6 +25,17 @@ public interface DriverRepository extends JpaRepository<Driver, Integer> {
     @Query(value="select * from driver order by :sortby :direction limit :limit offset :offset",nativeQuery = true)
     List<Driver> findDriversBasedOnPaginationWithNativeQuery(@Param("offset")int offset,@Param("limit") int limit, @Param("sortby") String sortBy, @Param("direction") String direction);
 
+    @Query(value= """
+            select d.*
+            from driver d
+            join booking b
+            on d.driver_id = b.driver_id
+            group by b.driver_id
+            order by count(b.driver_id) desc
+            limit 1
+            """, nativeQuery = true)
+    Driver findMostActiveDriver();
+
 
     //this is not needed as while fetching the driver we fethced the cab object which has available field
     /*

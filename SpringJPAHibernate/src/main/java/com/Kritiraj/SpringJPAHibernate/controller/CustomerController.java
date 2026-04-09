@@ -7,6 +7,7 @@ import com.Kritiraj.SpringJPAHibernate.dto.request.CustomerUpdateRequest;
 import com.Kritiraj.SpringJPAHibernate.dto.response.BookingResponse;
 import com.Kritiraj.SpringJPAHibernate.dto.response.BookingsResponse;
 import com.Kritiraj.SpringJPAHibernate.dto.response.CustomerResponse;
+import com.Kritiraj.SpringJPAHibernate.dto.response.CustomerStatisticsResponse;
 import com.Kritiraj.SpringJPAHibernate.model.Booking;
 import com.Kritiraj.SpringJPAHibernate.service.BookingService;
 import com.Kritiraj.SpringJPAHibernate.service.CustomerService;
@@ -94,6 +95,12 @@ public class CustomerController {
     public ResponseEntity<List<BookingsResponse>> getAllBookingsForCustomer(@PathVariable("id") int customerId) {
         List<BookingsResponse> bookings = bookingService.getAllBookingsForCustomer(customerId);
         return new ResponseEntity<>(bookings,HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/stats")
+    public ResponseEntity<CustomerStatisticsResponse> getCustomerStatistics(@PathVariable("id") int customerId) {
+        CustomerStatisticsResponse customerStatisticsResponse = customerService.getCustomerStatistics(customerId);
+        return new ResponseEntity<>(customerStatisticsResponse,HttpStatus.OK);
     }
 
 
