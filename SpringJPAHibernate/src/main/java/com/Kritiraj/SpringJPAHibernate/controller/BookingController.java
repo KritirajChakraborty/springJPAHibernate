@@ -29,6 +29,18 @@ public class BookingController {
         return new ResponseEntity<>(deletedBooking,HttpStatus.ACCEPTED);
     }
 
+    @PostMapping("/{id}/cancel")
+    public ResponseEntity<Booking> cancelBooking(@PathVariable("id") int bookingId) {
+        Booking booking = bookingService.cancelBooking(bookingId);
+        return new ResponseEntity<>(booking, HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping("/{id}/complete")
+    public ResponseEntity<Booking> completeBooking(@PathVariable("id") int bookingId) {
+        Booking booking = bookingService.completeBooking(bookingId);
+        return new ResponseEntity<>(booking, HttpStatus.ACCEPTED);
+    }
+
 
 
 }

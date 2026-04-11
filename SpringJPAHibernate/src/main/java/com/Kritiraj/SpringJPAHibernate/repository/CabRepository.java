@@ -15,5 +15,6 @@ public interface CabRepository extends JpaRepository<Cab,Integer> {
     Cab findAvailableCab();
 
 
-
+    @Query(value = "select count(cab_id) from cab c where c.available = true", nativeQuery = true)
+    int findByAvailability();
 }

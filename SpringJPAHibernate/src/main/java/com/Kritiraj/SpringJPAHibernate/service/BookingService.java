@@ -49,6 +49,13 @@ public class BookingService {
         if(cab == null) {
             throw new CabNotAvailableException("Sorry. No Cab Found!");
         }
+
+        //CHECK IF THERE ARE < 3 CABS.THEN SURGE PRICE BY 1.5
+        int numberOfCabs = cabRepository.findByAvailability();
+        if(numberOfCabs < 7) {
+            cab.setPerKMRate(cab.getPerKMRate() * 1.5);
+        }
+
         cab.setAvailable(false);
         cabRepository.save(cab);
 
@@ -138,5 +145,37 @@ public class BookingService {
 
         return bookingsResponses;
 
+    }
+
+    public Booking cancelBooking(int bookingId) {
+
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() ->  new BookingNotFoundException("Oops! Booking Not Found!"));
+
+        if(booking.getTripStatus() == TripStatus.COMPLETED) {
+            throw new RuntimeException("Booking Already Completed!!");
+        }
+        if(booking.getTripStatus() == TripStatus.CANCELLED) {
+            throw new RuntimeException("Booking Already Cancelled!!");
+        }
+        booking.setTripStatus(TripStatus.CANCELLED);
+        bookingRepository.save(booking);
+        return booking;
+    }
+
+    public Booking completeBooking(int bookingId) {
+
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() ->  new BookingNotFoundException("Oops! Booking Not Found!"));
+
+        if(booking.getTripStatus() == TripStatus.COMPLETED) {
+            throw new RuntimeException("Booking Already Completed!!");
+        }
+        if(booking.getTripStatus() == TripStatus.CANCELLED) {
+            throw new RuntimeException("Booking Has Been Cancelled!!");
+        }
+        booking.setTripStatus(TripStatus.COMPLETED);
+        bookingRepository.save(booking);
+        return booking;
     }
 }
