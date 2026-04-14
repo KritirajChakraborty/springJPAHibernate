@@ -4,10 +4,7 @@ import com.Kritiraj.SpringJPAHibernate.Enum.Gender;
 import com.Kritiraj.SpringJPAHibernate.Enum.SortBy;
 import com.Kritiraj.SpringJPAHibernate.dto.request.CustomerRequest;
 import com.Kritiraj.SpringJPAHibernate.dto.request.CustomerUpdateRequest;
-import com.Kritiraj.SpringJPAHibernate.dto.response.BookingResponse;
-import com.Kritiraj.SpringJPAHibernate.dto.response.BookingsResponse;
-import com.Kritiraj.SpringJPAHibernate.dto.response.CustomerResponse;
-import com.Kritiraj.SpringJPAHibernate.dto.response.CustomerStatisticsResponse;
+import com.Kritiraj.SpringJPAHibernate.dto.response.*;
 import com.Kritiraj.SpringJPAHibernate.model.Booking;
 import com.Kritiraj.SpringJPAHibernate.service.BookingService;
 import com.Kritiraj.SpringJPAHibernate.service.CustomerService;
@@ -33,18 +30,18 @@ public class CustomerController {
     BookingService bookingService;
 
     @PostMapping("/add")
-    public ResponseEntity<CustomerResponse> addCustomer(@RequestBody CustomerRequest customerRequest) {
+    public ResponseEntity<ApiResponse<CustomerResponse>> addCustomer(@RequestBody CustomerRequest customerRequest) {
 
         CustomerResponse savedCustomerResponse =  customerService.addCustomer(customerRequest);
-        return new ResponseEntity<>(savedCustomerResponse, HttpStatus.OK);
+        return new ResponseEntity<>(ApiResponse.success(savedCustomerResponse,201,"Customer Registered Successfully!"), HttpStatus.CREATED);
     }
 
     @GetMapping("/get/customer-id/{id}")
-    public ResponseEntity<?> getCustomer(@PathVariable("id") int customerId) {
+    public ResponseEntity<ApiResponse<CustomerResponse>> getCustomer(@PathVariable("id") int customerId) {
         log.trace("Entering finding customer controller");
         CustomerResponse customerResponse =  customerService.getCustomer(customerId);
         log.trace("Exiting finding customer controller");
-        return new ResponseEntity<CustomerResponse>(customerResponse,HttpStatus.OK);
+        return new ResponseEntity<>(ApiResponse.success(customerResponse,200,"Get Customer Request Successful"),HttpStatus.OK);
 
     }
     //get customer by gender

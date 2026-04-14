@@ -1,6 +1,7 @@
 package com.Kritiraj.SpringJPAHibernate.controller;
 
 import com.Kritiraj.SpringJPAHibernate.dto.request.CabRequest;
+import com.Kritiraj.SpringJPAHibernate.dto.response.ApiResponse;
 import com.Kritiraj.SpringJPAHibernate.dto.response.CabResponse;
 import com.Kritiraj.SpringJPAHibernate.dto.response.CabUtilizationResponse;
 import com.Kritiraj.SpringJPAHibernate.model.Cab;
@@ -19,26 +20,26 @@ public class CabController {
     CabService cabService;
 
     @PostMapping("/register/driver/{id}")
-    public ResponseEntity<CabResponse> registerCab(@RequestBody CabRequest cabRequest,
-                                                   @PathVariable("id") int driverId) {
+    public ResponseEntity<ApiResponse<CabResponse>> registerCab(@RequestBody CabRequest cabRequest,
+                                                               @PathVariable("id") int driverId) {
         CabResponse cabResponse = cabService.registerCab(cabRequest,driverId);
-        return ResponseEntity.ok(cabResponse);
+        return ResponseEntity.ok(ApiResponse.success(cabResponse,200,"Cab Registered Successfully!"));
     }
     @PostMapping("/register/cab")
-    public ResponseEntity<Cab> registerCabWithoutDriver(@RequestBody CabRequest cabRequest) {
+    public ResponseEntity<ApiResponse<Cab>> registerCabWithoutDriver(@RequestBody CabRequest cabRequest) {
         Cab cab = cabService.registerCabWithoutDriver(cabRequest);
-        return ResponseEntity.ok(cab);
+        return ResponseEntity.ok(ApiResponse.success(cab,202,"Cab Registered Successfully v2!"));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteCab(@PathVariable("id") int cabId) {
+    public ResponseEntity<ApiResponse<Void>> deleteCab(@PathVariable("id") int cabId) {
         String message = cabService.deleteCabIfNoDriverAssigned(cabId);
-        return ResponseEntity.ok(message);
+        return ResponseEntity.ok(ApiResponse.success(null,202,"Cab deleted Successfully!"));
     }
 
     @GetMapping("/utilization/{id}")
-    public ResponseEntity<CabUtilizationResponse> getCabUtilization(@PathVariable("id") int cabId) {
+    public ResponseEntity<ApiResponse<CabUtilizationResponse>> getCabUtilization(@PathVariable("id") int cabId) {
             CabUtilizationResponse cabResponse = cabService.findCabUtilization(cabId);
-            return new ResponseEntity<>(cabResponse, HttpStatus.OK);
+            return new ResponseEntity<>(ApiResponse.success(cabResponse,202,"Cab Utilization Generated Successfully!"), HttpStatus.OK);
     }
 }
