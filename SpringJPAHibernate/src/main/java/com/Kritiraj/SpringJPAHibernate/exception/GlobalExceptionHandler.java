@@ -1,60 +1,84 @@
 package com.Kritiraj.SpringJPAHibernate.exception;
 
-import com.Kritiraj.SpringJPAHibernate.dto.response.ErrorResponse;
+import com.Kritiraj.SpringJPAHibernate.dto.response.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.time.LocalDateTime;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(CustomerNotFoundException.class)
-    public ResponseEntity<ErrorResponse> customerExceptionHandler(CustomerNotFoundException e) {
-        ErrorResponse error = new ErrorResponse(LocalDateTime.now(),e.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    public ResponseEntity<ApiResponse<Void>> handleCustomerNotFound(CustomerNotFoundException e) {
+        return new ResponseEntity<>(
+                ApiResponse.error(e.getMessage(), 404),
+                HttpStatus.NOT_FOUND
+        );
     }
+
     @ExceptionHandler(CustomerDeletionException.class)
-    public ResponseEntity<ErrorResponse> handleCustomerDeletionHandler(CustomerDeletionException e) {
-        ErrorResponse error = new ErrorResponse(LocalDateTime.now(),e.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    public ResponseEntity<ApiResponse<Void>> handleCustomerDeletion(CustomerDeletionException e) {
+        return new ResponseEntity<>(
+                ApiResponse.error(e.getMessage(), 409),
+                HttpStatus.CONFLICT
+        );
     }
+
     @ExceptionHandler(DriverDeletionException.class)
-    public ResponseEntity<ErrorResponse> handleDriverDeletionHandler(DriverDeletionException e) {
-        ErrorResponse error = new ErrorResponse(LocalDateTime.now(),e.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    public ResponseEntity<ApiResponse<Void>> handleDriverDeletion(DriverDeletionException e) {
+        return new ResponseEntity<>(
+                ApiResponse.error(e.getMessage(), 409),
+                HttpStatus.CONFLICT
+        );
     }
+
     @ExceptionHandler(CabNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleCabExceptionHandler(CabNotFoundException e) {
-        ErrorResponse error = new ErrorResponse(LocalDateTime.now(),e.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    public ResponseEntity<ApiResponse<Void>> handleCabNotFound(CabNotFoundException e) {
+        return new ResponseEntity<>(
+                ApiResponse.error(e.getMessage(), 404),
+                HttpStatus.NOT_FOUND
+        );
     }
+
     @ExceptionHandler(CabDeletionException.class)
-    public ResponseEntity<ErrorResponse> handleCabDeletionHandler(CabDeletionException e) {
-        ErrorResponse error = new ErrorResponse(LocalDateTime.now(),e.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    public ResponseEntity<ApiResponse<Void>> handleCabDeletion(CabDeletionException e) {
+        return new ResponseEntity<>(
+                ApiResponse.error(e.getMessage(), 409),
+                HttpStatus.CONFLICT
+        );
     }
+
     @ExceptionHandler(CabNotAssociatedWithAnyDriverException.class)
-    public ResponseEntity<ErrorResponse> handleCabExceptionHandler(CabNotAssociatedWithAnyDriverException e) {
-        ErrorResponse error = new ErrorResponse(LocalDateTime.now(),e.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
+    public ResponseEntity<ApiResponse<Void>> handleCabAssociation(CabNotAssociatedWithAnyDriverException e) {
+        return new ResponseEntity<>(
+                ApiResponse.error(e.getMessage(), 403),
+                HttpStatus.FORBIDDEN
+        );
     }
+
     @ExceptionHandler(BookingNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleBookingNotFoundException(BookingNotFoundException e) {
-        ErrorResponse error = new ErrorResponse(LocalDateTime.now(),e.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    public ResponseEntity<ApiResponse<Void>> handleBookingNotFound(BookingNotFoundException e) {
+        return new ResponseEntity<>(
+                ApiResponse.error(e.getMessage(), 404),
+                HttpStatus.NOT_FOUND
+        );
     }
+
     @ExceptionHandler(BookingDeletionException.class)
-    public ResponseEntity<ErrorResponse> handleBookingDeletionException(BookingDeletionException e) {
-        ErrorResponse error = new ErrorResponse(LocalDateTime.now(),e.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    public ResponseEntity<ApiResponse<Void>> handleBookingDeletion(BookingDeletionException e) {
+        return new ResponseEntity<>(
+                ApiResponse.error(e.getMessage(), 409),
+                HttpStatus.CONFLICT
+        );
     }
-    //GENERIC EXCEPTION HANDLER TO CATCH UNEXPECTED ERRORS
+
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleGeneralException(Exception e) {
-        ErrorResponse error = new ErrorResponse(LocalDateTime.now(),e.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<ApiResponse<Void>> handleGeneral(Exception e) {
+        return new ResponseEntity<>(
+                ApiResponse.error("Something went wrong", 500),
+                HttpStatus.INTERNAL_SERVER_ERROR
+        );
     }
 }
